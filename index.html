@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack - Waste Management Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-green-50 min-h-screen text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-green-700 text-white px-6 py-4 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">🌱 EcoTrack</h1>
+            <span class="text-sm">Smart Waste Management</span>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- Welcome Section -->
+        <section class="mb-8">
+            <h2 class="text-3xl font-bold text-green-800">
+                Waste Management Dashboard
+            </h2>
+            <p class="text-gray-600 mt-2">
+                Track your waste and take a step towards a cleaner environment.
+            </p>
+        </section>
+
+        <!-- Statistics Cards -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-gray-500">Total Waste</p>
+                <h3 id="totalWaste" class="text-3xl font-bold text-green-700 mt-2">
+                    0 kg
+                </h3>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-gray-500">Plastic</p>
+                <h3 id="plasticWaste" class="text-3xl font-bold text-blue-600 mt-2">
+                    0 kg
+                </h3>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-gray-500">Paper</p>
+                <h3 id="paperWaste" class="text-3xl font-bold text-yellow-600 mt-2">
+                    0 kg
+                </h3>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-gray-500">Organic</p>
+                <h3 id="organicWaste" class="text-3xl font-bold text-green-600 mt-2">
+                    0 kg
+                </h3>
+            </div>
+
+        </section>
+
+        <!-- Add Waste + Goal -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Add Waste Form -->
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-bold mb-5 text-green-800">
+                    ➕ Add Waste Entry
+                </h3>
+
+                <form id="wasteForm">
+
+                    <div class="mb-4">
+                        <label class="block font-medium mb-2">
+                            Waste Category
+                        </label>
+
+                        <select
+                            id="category"
+                            class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            required
+                        >
+                            <option value="">Select category</option>
+                            <option value="Plastic">Plastic</option>
+                            <option value="Paper">Paper</option>
+                            <option value="Organic">Organic</option>
+                            <option value="E-Waste">E-Waste</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block font-medium mb-2">
+                            Quantity (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            min="0.1"
+                            step="0.1"
+                            placeholder="Enter quantity"
+                            class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-5">
+                        <label class="block font-medium mb-2">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            required
+                        >
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition"
+                    >
+                        Add Waste
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- Weekly Goal -->
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-bold text-green-800 mb-4">
+                    🎯 Weekly Waste Goal
+                </h3>
+
+                <p class="text-gray-600 mb-2">
+                    Goal: Keep waste below <b>10 kg</b>
+                </p>
+
+                <div class="w-full bg-gray-200 rounded-full h-5 mb-4">
+                    <div
+                        id="progressBar"
+                        class="bg-green-600 h-5 rounded-full transition-all duration-500"
+                        style="width: 0%"
+                    ></div>
+                </div>
+
+                <p id="goalMessage" class="font-medium text-green-700">
+                    Start adding waste entries!
+                </p>
+
+                <div class="mt-6 bg-green-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-green-800 mb-2">
+                        💡 Eco Tip
+                    </h4>
+
+                    <p id="ecoTip" class="text-gray-600">
+                        Avoid single-use plastic whenever possible.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Waste Entries -->
+        <section class="bg-white rounded-xl shadow p-6">
+
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-xl font-bold text-green-800">
+                    📋 Waste Entries
+                </h3>
+
+                <button
+                    id="clearAll"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
+                >
+                    Clear All
+                </button>
+            </div>
+
+            <div id="emptyMessage" class="text-center py-8 text-gray-500">
+                No waste entries added yet.
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left hidden" id="wasteTable">
+
+                    <thead class="border-b bg-green-50">
+                        <tr>
+                            <th class="p-3">Category</th>
+                            <th class="p-3">Quantity</th>
+                            <th class="p-3">Date</th>
+                            <th class="p-3">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="wasteList"></tbody>
+
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-green-700 text-white text-center py-5 mt-10">
+        <p> By sanjana vishwakarma CS25109 </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
